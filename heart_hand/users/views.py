@@ -7,6 +7,7 @@ from heart_hand.users.forms import RegistrationForm,LoginForm,UpdateUserForm
 
 users = Blueprint('users', __name__)
 
+
 # register
 @users.route('/register', methods=['GET','POST'])
 def register():
@@ -25,6 +26,7 @@ def register():
 
     return render_template('register.html',form=form)
      
+
 # login
 @users.route('/login', methods=['GET','POST'])
 def login():

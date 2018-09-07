@@ -76,6 +76,16 @@ class Child(db.Model):
     date_of_birth = db.Column(db.DateTime(),nullable=False)
     notes= db.Column(db.String(255)) 
     
+    def __init__(self,parent_id,first_name,last_name,date_of_birth,notes):
+        self.parent_id = parent_id 
+        self.first_name = first_name 
+        self.last_name = last_name 
+        self.date_of_birth = date_of_birth
+        self.notes = notes
+
+    def __repr__(self):
+        return f"First Name: {self.first_name} -- Last Name: {self.last_name}" 
+
 
 class Lesson(db.Model):
     __tablename__ = "lesson"
@@ -85,9 +95,23 @@ class Lesson(db.Model):
     day_of_class = db.Column(db.String(80))
     lesson_time = db.Column(db.DateTime())
     lesson_duration = db.Column(db.Integer())
+    lesson_recurring = db.Column(db.Boolean())
+    lesson_recurring_period = db.Column(db.String(80))
     lesson_cost = db.Column(db.Float())
     lesson_description = db.Column(db.String(255)) 
 
+    def __init__(self,lesson_name,day_of_class,lesson_time,lesson_duration,lesson_cost,lesson_recurring,lesson_recurring_period,lesson_description):
+        self.lesson_name= lesson_name
+        self.day_of_class= day_of_class 
+        self.lesson_time= lesson_time
+        self.lesson_duration = lesson_duration
+        self.lesson_cost = lesson_cost
+        self.lesson_recurring = lesson_recurring
+        self.lesson_recurring_period = lesson_recurring_period
+        self.lesson_description = lesson_description
+
+    def __repr__(self):
+         return f"Lesson: {self.lesson_name}" 
 
 class Business_Costs(db.Model):
     __tablename__ = "business_costs"
@@ -98,6 +122,16 @@ class Business_Costs(db.Model):
     cost_incurred_date = db.Column(db.DateTime(),nullable=False,default=datetime.utcnow)
     includes_gst = db.Column(db.Boolean())
     cost_description = db.Column(db.String(255)) 
+
+    def __init__(self,cost_value,cost_name,cost_incurred_date ,includes_gst,cost_description):
+        self.cost_value = cost_value
+        self.cost_name = cost_value
+        self.cost_incurred_date = cost_incurred_date
+        self.includes_gst = includes_gst
+        self.cost_description = cost_description
+
+    def __repr__(self):
+         return f"Type of cost: {self.cost_name} -- Cost Value: {self.cost_value}"
 
 
 class Payments(db.Model):
@@ -114,7 +148,20 @@ class Payments(db.Model):
     payment_type = db.Column(db.String(80))
     payment_date = db.Column(db.DateTime(),nullable=False,default=datetime.utcnow)
     includes_gst = db.Column(db.Boolean())
-    cost_description = db.Column(db.String(255)) 
+    payment_description = db.Column(db.String(255)) 
+
+    def __init__(self,payee_id,lesson_id,payment_value,payment_name,payment_type,payment_date,includes_gst,payment_description):
+        self.payee_id = payee_id 
+        self.lesson_id = lesson_id
+        self.payment_value = payment_value
+        self.payment_name = payment_name
+        self.payment_type = payment_type
+        self.payment_date = payment_date
+        self.includes_gst = includes_gst
+        self.payment_description = payment_description
+
+    def __repr__(self):
+         return f"Payment Name: {self.payment_name} -- Payment Value: {self.payment_value} -- Payment Date: {self.payment_date}" 
 
 
 class Class_List(db.Model):
@@ -125,6 +172,40 @@ class Class_List(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     participant_id = db.Column(db.Integer(), db.ForeignKey('person.id'),nullable=False)
     lesson_id = db.Column(db.Integer(), db.ForeignKey('lesson.id'),nullable=False)
+
+    def __init__(self,participant_id,lesson_id):
+        self.participant_id= participant_id 
+        self.lesson_id = lesson_id
+       
+    def __repr__(self):
+         return f"Lesson Id: {self.lesson_id} -- Participant Id: {self.participant_id}"
+
+ 
+class Class_Program(db.Model):
+    __tablename__ = "class_program"
+
+    lesson = db.relationship(Lesson)
+  
+    id = db.Column(db.Integer(), primary_key=True)
+    lesson_id = db.Column(db.Integer(), db.ForeignKey('lesson.id'),nullable=False)
+    program_name = db.Column(db.String(80))
+    program_cost = db.Column(db.Float())
+    program_discount = db.Column(db.Float())
+    
+
+    def __init__(self,program_name,lesson_id,program_cost,program_discount,program_description):
+        self.program_name = program_name
+        self.lesson_id = lesson_id
+        self.program_cost = program_cost
+        self.program_discount = program_discount
+        self.program_description = program_description
+
+    def __repr__(self):
+         return f"Program Name {self.program_name}"
+
+
+
+
 
 
     
