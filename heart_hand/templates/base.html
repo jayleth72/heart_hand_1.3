@@ -8,7 +8,7 @@
     
     <meta charset="UTF-8">
     
-    <title>Document</title>
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
     
@@ -31,10 +31,11 @@
         <li class='nav-link'>
                 <a href="{{url_for('users.login')}}">Log In</a>
         </li>
-        <li class='nav-link'>
-                <a href="{{url_for('users.register')}}">Register</a>
-        </li>
         {% endif %}
+        <li class='nav-link'>
+                <a href="{{url_for('users.registerUser')}}">Register</a>
+        </li>
+        
     </ul>
 
     <div class="container">

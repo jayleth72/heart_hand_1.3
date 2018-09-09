@@ -14,11 +14,12 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Log In')
 
+
 class RegistrationForm(FlaskForm):
     email = StringField('Email',validators=[DataRequired(),Email()])
     username = StringField('Username',validators=[DataRequired(),Email()])
-    password = PasswordField('Password', validators=[DataRequired(),EqualTo('pass_confirm',message='Passwords must match')])
-    pass_confirm = PasswordField('Confirm Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(),EqualTo('password_confirm',message='Passwords must match')])
+    password_confirm = PasswordField('Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Register')
 
     def check_email(self,field):
@@ -29,9 +30,10 @@ class RegistrationForm(FlaskForm):
         if User.query.filter_by(username=field.data).first():
             raise ValidationError('Your username has been registered already!')
 
+
 class UpdateUserForm(FlaskForm):
     email = StringField('Email',validators=[DataRequired(),Email()])
-    username = StringField('Username',validators=[DataRequired(),Email()])
+    username = StringField('Username',validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()]) 
     submit = SubmitField('Submit')
 

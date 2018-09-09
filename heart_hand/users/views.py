@@ -9,11 +9,11 @@ users = Blueprint('users', __name__)
 
 
 # register
-@users.route('/register', methods=['GET','POST'])
-def register():
+@users.route('/registerUser', methods=['GET','POST'])
+def registerUser():
 
     form = RegistrationForm()
-
+    
     if form.validate_on_submit():
         user = User(email=form.email.data,
                username=form.username.data,
@@ -23,8 +23,10 @@ def register():
         db.session.commit()
         flash('Thanks for registration')
         return redirect(url_for('users.login'))
+    else:
+        flash_errors(form)    
 
-    return render_template('register.html',form=form)
+    return render_template('registerUser.html',form=form)
      
 
 # login
@@ -76,3 +78,12 @@ def account():
         form.email.data = current_user.email
 
     return render_template('account.html',form=form)              
+
+def flash_errors(form):
+    """Flashes form errors"""
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            ), 'error')
