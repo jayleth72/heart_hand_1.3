@@ -8,7 +8,7 @@ from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import InputRequired
 
 
-class PeopleEntryForm(FlaskForm):
+class CustomerEntryForm(FlaskForm):
     first_name = StringField('First Name', validators=[InputRequired(message='First name is required')])
     last_name = StringField('Last Name', validators=[InputRequired(message='Last name is required')])
     email = StringField('Email',validators=[DataRequired(),Email()])
@@ -20,3 +20,4 @@ class PeopleEntryForm(FlaskForm):
     alternative_contact = StringField('Alternative Contact')
     alternative_contact_phone = StringField('Alternative Contact Phone')
     notes = TextAreaField('Notes')
+    submit = SubmitField('Add Customer')

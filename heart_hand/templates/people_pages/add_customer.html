@@ -1,11 +1,10 @@
+{% from "/macros/_macros.html" import render_field_with_errors, render_field %}
 {% extends "base.html" %}
 {% block content %}
   <div class="jumbotron">
     <div class="container">
-        <h1>Add New People</h1>
-        <form method="POST">
-
-            <form method="POST">
+        <h1>Add New Customer</h1>
+              <form method="POST">
 
                 {{form.hidden_tag()}}
 
@@ -20,7 +19,8 @@
                 {{ render_field(form.alternative_contact, class="form-control") }} 
                 {{ render_field(form.alternative_contact_phone, class="form-control") }}
                 {{ render_field(form.notes, class="form-control") }}  
-                     
+                   
+                
                 <input type="submit" value="submit">
             </form>
 

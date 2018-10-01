@@ -49,7 +49,7 @@ def login():
 
         return redirect(next)    
 
-    return render_template('login.html', form=form)     
+    return render_template('admin/login.html', form=form)     
 
 
 # logout
@@ -77,7 +77,7 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
 
-    return render_template('account.html',form=form)              
+    return render_template('admin/account.html',form=form)              
 
 def flash_errors(form):
     """Flashes form errors"""
