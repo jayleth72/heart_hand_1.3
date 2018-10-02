@@ -5,6 +5,7 @@ from heart_hand.settings import *
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
+
 app = Flask(__name__)
 
 ######################################
@@ -43,3 +44,29 @@ app.register_blueprint(core)
 app.register_blueprint(users)
 app.register_blueprint(people)
 app.register_blueprint(error_pages)
+
+
+######################################
+############# FLASK SECURITY ############
+######################################
+from flask_security import Security, SQLAlchemyUserDatastore
+from heart_hand.models import *
+
+# user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+# security = Security(app, user_datastore)
+
+######################################
+
+
+######################################
+############# ADMIN PANEL ############
+######################################
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+
+admin = Admin(app)
+admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(Person, db.session))
+admin.add_view(ModelView(Child, db.session))
+
+######################################

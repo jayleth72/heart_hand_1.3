@@ -2,13 +2,25 @@
 from heart_hand import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from flask_security import RoleMixin
 from datetime import datetime
+
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
 
-class User(db.Model,UserMixin):
+
+# roles_users = db.Table('roles_users',
+#     db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+#     db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+
+# class Role(db.Model, RoleMixin):
+#     id = db.Column(db.Integer(), primary_key=True)
+#     name = db.Column(db.String(80), unique=True)
+#     description = db.Column(db.String(255))
+
+class User(db.Model, UserMixin):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -19,10 +31,12 @@ class User(db.Model,UserMixin):
     # confirmed_at = db.Column(db.DateTime())
     # roles = db.relationship('Role', secondary=roles_users,
     #                         backref=db.backref('users', lazy='dynamic'))
+
     def __init__(self,email,username,password):
         self.email = email
         self.username = username
         self.password_hash = generate_password_hash(password)
+        self.roles = roles
 
     def check_password(self,password):
         return check_password_hash(self.password_hash,password)
@@ -74,7 +88,7 @@ class Child(db.Model):
     first_name = db.Column(db.String(80))
     last_name = db.Column(db.String(80),nullable=False)
     date_of_birth = db.Column(db.DateTime(),nullable=False)
-    notes= db.Column(db.String(255)) 
+    notes = db.Column(db.String(255)) 
     
     def __init__(self,parent_id,first_name,last_name,date_of_birth,notes):
         self.parent_id = parent_id 

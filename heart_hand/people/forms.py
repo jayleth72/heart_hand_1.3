@@ -6,6 +6,7 @@ from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms import ValidationError
 from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import InputRequired
+from wtforms.fields.html5 import EmailField, DateField
 
 
 class CustomerEntryForm(FlaskForm):
@@ -21,3 +22,10 @@ class CustomerEntryForm(FlaskForm):
     alternative_contact_phone = StringField('Alternative Contact Phone')
     notes = TextAreaField('Notes')
     submit = SubmitField('Add Customer')
+
+class ChildEntryForm(FlaskForm):
+    first_name = StringField('First Name', validators=[InputRequired(message='First name is required')])
+    last_name = StringField('Last Name', validators=[InputRequired(message='Last name is required')])
+    date_of_birth = DateField('Date of Birth', format='%Y-%m-%d', validators=[InputRequired(message='Date of birth is required')])
+    notes = TextAreaField('Notes')  
+    submit = SubmitField('Add Child')      

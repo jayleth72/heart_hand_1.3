@@ -49,11 +49,12 @@ def login():
 
         return redirect(next)    
 
-    return render_template('admin/login.html', form=form)     
+    return render_template('users/login.html', form=form)     
 
 
 # logout
 @users.route("/logout")
+@login_required
 def logout():
     logout_user()
     return redirect(url_for("core.index"))
@@ -77,7 +78,7 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
 
-    return render_template('admin/account.html',form=form)              
+    return render_template('users/account.html',form=form)              
 
 def flash_errors(form):
     """Flashes form errors"""

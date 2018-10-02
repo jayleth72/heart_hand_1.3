@@ -1,30 +1,12 @@
-{% from "/macros/_macros.html" import render_field_with_errors, render_field %}
 {% extends "base.html" %}
 {% block content %}
   <div class="jumbotron">
     <div class="container">
-        <h1>Customer Details</h1>
-              <form method="POST">
+        <h1>Customer Details for {{customer.first_name}} {{customer.last_name}} </h1>
 
-                {{form.hidden_tag()}}
 
-                {{ render_field_with_errors(form.first_name, class="form-control") }}
-                {{ render_field_with_errors(form.last_name, class="form-control") }}
-                {{ render_field_with_errors(form.email, class="form-control") }}
-                {{ render_field_with_errors(form.street_address, class="form-control") }} 
-                {{ render_field_with_errors(form.suburb, class="form-control") }} 
-                {{ render_field(form.state, class="form-control") }} 
-                {{ render_field_with_errors(form.postcode, class="form-control") }} 
-                {{ render_field_with_errors(form.phone, class="form-control") }} 
-                {{ render_field(form.alternative_contact, class="form-control") }} 
-                {{ render_field(form.alternative_contact_phone, class="form-control") }}
-                {{ render_field(form.notes, class="form-control") }}  
-                   
-                
-                <input type="submit" value="submit">
-            </form>
-
-            <a class="btn btn-primary btn-block" href="add_child.html" role="button">Add Customer</a>
+            <br>
+            <a class="btn btn-primary btn-block" href="add_child.html" role="button">Add Child</a>
     </div>
   </div>
   

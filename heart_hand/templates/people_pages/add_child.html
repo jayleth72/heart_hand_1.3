@@ -4,7 +4,21 @@
   <div class="jumbotron">
     <div class="container">
         <h1>Add Child</h1>
+        
+        Parent name is {{ first_name }}
+        Parent last name is {{ last_name}}  
+        email is {{ email }}  
+       
+        <form method="POST" action="{{ url_for('add_child', arg1=first_name, arg2=last_name, arg3=email ) }}">
+              {{form.hidden_tag()}}
               
+              {{ render_field_with_errors(form.first_name, class="form-control") }}
+              {{ render_field_with_errors(form.last_name, class="form-control") }}
+              {{ render_field_with_errors(form.date_of_birth, class="form-control") }}
+              {{ render_field(form.notes, class="form-control") }}       
+              <input type="submit" value="submit">
+        </form> 
+        
     </div>
   </div>
   
