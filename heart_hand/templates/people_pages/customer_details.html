@@ -15,7 +15,7 @@
             
             <br>
             <a class="btn btn-primary btn-block" href="{{url_for('people.update_customer',id=customer.id)}}" role="button">Update Customer Details</a>
-            <a class="btn btn-primary btn-block" href="add_child.html" role="button">Add Child</a>
+            <a class="btn btn-primary btn-block" href="{{url_for('people.add_child',parent_id=customer.id)}}" role="button">Add Child</a>
     </div>
   </div>
   

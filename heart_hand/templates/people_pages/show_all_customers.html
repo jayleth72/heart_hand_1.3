@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+        <h1>All Heart and Hand Customers</h1>
+            
+            {% for customer in customers %}
+                <a class="btn btn-primary btn-block" href="{{url_for('people.customer_details',id=customer.id)}}" role="button">{{customer.first_name}} {{customer.last_name}}</a>
+            {% endfor %}
+                
+    </div>
+  </div>
+  
+{% endblock %}  
