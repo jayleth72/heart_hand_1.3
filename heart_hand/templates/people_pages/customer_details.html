@@ -12,7 +12,15 @@
               <li><strong>Alternative Contact Phone: </strong> {{customer.alternative_contact_phone}}</li>
               <li><strong>Notes: </strong> {{customer.notes}}</li>
             </ul>
+
+            {% if children.count() > 0 %}
+              <h3>Children Details</h3>
+              {% for child in children %}
+                <a href="{{url_for('people.child_details',child_id=child.id)}}">{{ child.first_name }} {{child.last_name}}</a>
+              {% endfor %}
+            {% endif %}
             
+            <br>
             <br>
             <a class="btn btn-primary btn-block" href="{{url_for('people.update_customer',id=customer.id)}}" role="button">Update Customer Details</a>
             <a class="btn btn-primary btn-block" href="{{url_for('people.add_child',parent_id=customer.id)}}" role="button">Add Child</a>

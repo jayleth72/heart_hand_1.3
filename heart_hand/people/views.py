@@ -40,14 +40,15 @@ def add_customer():
     return render_template('people_pages/add_customer.html', form=form)  
 
 
-# return customer details using their email
+# return customer details using their id
 @people.route("/<int:id>")
 @login_required
 def customer_details(id):
     page = request.args.get('page',1,type=int)
     # return customer or 404 page (customer not found)
     customer = Person.query.filter_by(id=id).first_or_404()
-    return render_template('people_pages/customer_details.html',customer=customer)
+    children = Child.query.filter_by(parent_id=id)
+    return render_template('people_pages/customer_details.html',customer=customer, children=children)
 
 
 # Update Customer Details
@@ -118,3 +119,12 @@ def add_child(parent_id):
             return redirect(url_for('people.add_child', parent_id=parent_id))
     
     return render_template('people_pages/add_child.html', form=form, parent=parent) 
+
+
+# return child details using their id
+@people.route("/child_details/<int:child_id>")
+@login_required
+def child_details(child_id):
+    # return child or 404 page (child not found)
+    child = Child.query.filter_by(id=child_id).first_or_404()
+    return render_template('people_pages/child_details.html',child=child)
