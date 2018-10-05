@@ -4,6 +4,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from heart_hand import db
 from heart_hand.models import User, Person, Child
 from heart_hand.people.forms import CustomerEntryForm, ChildEntryForm
+from datetime import datetime
 
 people = Blueprint('people', __name__)
 
@@ -128,3 +129,30 @@ def child_details(child_id):
     # return child or 404 page (child not found)
     child = Child.query.filter_by(id=child_id).first_or_404()
     return render_template('people_pages/child_details.html',child=child)
+
+
+# Update Child Details
+@people.route('/update_child<int:id>', methods=['GET','POST'])
+@login_required
+def update_child(id):
+
+    form = ChildEntryForm()
+    child = Child.query.filter_by(id=id).first_or_404()
+
+    if form.validate_on_submit():
+
+        child.first_name =  form.first_name.data
+        child.last_name = form.last_name.data
+        dob = form.date_of_birth.data
+        child.date_of_birth = datetime.combine(dob, datetime.min.time())
+        child.notes = form.notes.data
+        db.session.commit()
+        flash('Child Details Updated!')
+        return child_details(id)
+
+    elif request.method == "GET":
+        form.first_name.data = child.first_name
+        form.last_name.data = child.last_name
+        form.date_of_birth.data = child.date_of_birth
+        form.notes.data = child.notes
+    return render_template('people_pages/update_child.html',form=form)     

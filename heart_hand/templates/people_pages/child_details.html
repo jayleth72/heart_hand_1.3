@@ -5,13 +5,13 @@
         <h1>Child Details for {{child.first_name}} {{child.last_name}} </h1>
             <h2>Details</h2>
             <ul>
-              <li><strong>Date of Birth: </strong> {{child.date_of_birth}}</li>
+              <li><strong>Date of Birth: </strong> {{child.date_of_birth.strftime('%d-%b-%Y')}}</li>
               <li><strong>Notes: </strong> {{child.notes}}</li>
             </ul>
             
             <br>
             <a class="btn btn-primary btn-block" href="{{url_for('people.customer_details',id=child.parent_id)}}" role="button">Parent Details</a>
-            <a class="btn btn-primary btn-block" href="#" role="button">Update Child Details</a>
+            <a class="btn btn-primary btn-block" href="{{url_for('people.update_child',id=child.id)}}" role="button">Update Child Details</a>
             <a class="btn btn-primary btn-block" href="#" role="button">Add To Class</a>
     </div>
   </div>
