@@ -11,15 +11,6 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
-# roles_users = db.Table('roles_users',
-#     db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-#     db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
-
-# class Role(db.Model, RoleMixin):
-#     id = db.Column(db.Integer(), primary_key=True)
-#     name = db.Column(db.String(80), unique=True)
-#     description = db.Column(db.String(255))
-
 class User(db.Model, UserMixin):
     __tablename__ = "users"
 
@@ -205,7 +196,7 @@ class Class_Program(db.Model):
     program_name = db.Column(db.String(80))
     program_cost = db.Column(db.Float())
     program_discount = db.Column(db.Float())
-    
+    program_description = db.Column(db.String(255))
 
     def __init__(self,program_name,lesson_id,program_cost,program_discount,program_description):
         self.program_name = program_name
@@ -218,8 +209,71 @@ class Class_Program(db.Model):
          return f"Program Name {self.program_name}"
 
 
+class Questionaire(db.Model):
+    __tablename__ = "questionaire"
+
+    id = db.Column(db.Integer(), primary_key=True)
+    questionaire_name = db.Column(db.String(80))
+    description = db.Column(db.String(255))
+
+    def __init__(self,questionaire_name,description):
+        self.questionaire_name = questionaire_name
+        self.description = description
+
+    def __repr__(self):
+         return f"Questionaire Name {self.questionaire_name}"
 
 
+class Questionaire_Questions(db.Model):
+    __tablename__ = "questionaire_questions"
+
+    questionaire = db.relationship(Questionaire)
+
+    id = db.Column(db.Integer(), primary_key=True)
+    questionaire_id = db.Column(db.Integer(), db.ForeignKey('questionaire.id'),nullable=False)
+    question = db.Column(db.String(120))
+    response = db.Column(db.Boolean())
+
+    def __init__(self,questionaire_id,question,response):
+        self.questionaire_id = questionaire_id
+        self.question = question
+        self.response = response
+
+    def __repr__(self):
+         return f"Questionaire Questions {self.question}"
 
 
+class Child_Questionaire_Questions(db.Model):
+    __tablename__ = "child_questionaire_questions"
+
+    questionaire_questions = db.relationship(Questionaire_Questions)
+    child = db.relationship(Child)
+
+    id = db.Column(db.Integer(), primary_key=True)
+    question_id = db.Column(db.Integer(), db.ForeignKey('questionaire_questions.id'),nullable=False)
+    child_id = db.Column(db.Integer(), db.ForeignKey('child.id'),nullable=False)
     
+    def __init__(self,question_id,child_id):
+        self.question_id = question_id
+        self.child_id = child_id
+
+    def __repr__(self):
+         return f"Child Questions {self.id}" 
+
+
+class Customer_Questionaire_Questions(db.Model):
+    __tablename__ = "customer_questionaire_questions"
+
+    questionaire_questions = db.relationship(Questionaire_Questions)
+    person = db.relationship(Person)
+
+    id = db.Column(db.Integer(), primary_key=True)
+    question_id = db.Column(db.Integer(), db.ForeignKey('questionaire_questions.id'),nullable=False)
+    customer_id = db.Column(db.Integer(), db.ForeignKey('person.id'),nullable=False)
+    
+    def __init__(self,question_id,customer_id):
+        self.question_id = question_id
+        self.customer_id = customer_id
+
+    def __repr__(self):
+         return f"Customer Questions {self.id}"
