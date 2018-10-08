@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+        <h1>All Questionaire Types</h1>
+            <ul>
+              {% for questionaire in questionaires %}
+                <li><a href="{{url_for('questionaire.questionaire_details',id=questionaire.id)}}" >{{questionaire.questionaire_name}}</a></li>
+              {% endfor %}
+            </ul>
+           
+            <br>
+            <br>
+            <a class="btn btn-primary btn-block" href="{{ url_for('questionaire.add_questionaire_type') }}" role="button">Add Questionaire Type</a>
+    </div>
+  </div>
+  
+{% endblock %}

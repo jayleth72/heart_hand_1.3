@@ -38,11 +38,13 @@ login_manager.login_view = 'users.login'
 from heart_hand.core.views import core
 from heart_hand.users.views import users
 from heart_hand.people.views import people
+from heart_hand.questionaire.views import questionaire
 from heart_hand.error_pages.handlers import error_pages
 
 app.register_blueprint(core)
 app.register_blueprint(users)
 app.register_blueprint(people)
+app.register_blueprint(questionaire)
 app.register_blueprint(error_pages)
 
 

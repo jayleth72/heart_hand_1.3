@@ -10,7 +10,9 @@ from datetime import datetime
 def load_user(user_id):
     return User.query.get(user_id)
 
-
+######################################
+######### USER MODELS ################
+######################################
 class User(db.Model, UserMixin):
     __tablename__ = "users"
 
@@ -34,8 +36,12 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"Username {self.username}" 
+######################################
 
 
+######################################
+######### PEOPLE MODELS ##############
+######################################
 class Person(db.Model):
     __tablename__ = "person"
 
@@ -90,8 +96,12 @@ class Child(db.Model):
 
     def __repr__(self):
         return f"First Name: {self.first_name} -- Last Name: {self.last_name}" 
+######################################
 
 
+######################################
+######### CLASS MODELS ##############
+######################################
 class Lesson(db.Model):
     __tablename__ = "lesson"
 
@@ -118,6 +128,51 @@ class Lesson(db.Model):
     def __repr__(self):
          return f"Lesson: {self.lesson_name}" 
 
+
+class Class_List(db.Model):
+    __tablename__ = "class_list"
+
+    person = db.relationship(Person)
+  
+    id = db.Column(db.Integer(), primary_key=True)
+    participant_id = db.Column(db.Integer(), db.ForeignKey('person.id'),nullable=False)
+    lesson_id = db.Column(db.Integer(), db.ForeignKey('lesson.id'),nullable=False)
+
+    def __init__(self,participant_id,lesson_id):
+        self.participant_id= participant_id 
+        self.lesson_id = lesson_id
+       
+    def __repr__(self):
+         return f"Lesson Id: {self.lesson_id} -- Participant Id: {self.participant_id}"
+
+
+class Class_Program(db.Model):
+    __tablename__ = "class_program"
+
+    lesson = db.relationship(Lesson)
+  
+    id = db.Column(db.Integer(), primary_key=True)
+    lesson_id = db.Column(db.Integer(), db.ForeignKey('lesson.id'),nullable=False)
+    program_name = db.Column(db.String(80))
+    program_cost = db.Column(db.Float())
+    program_discount = db.Column(db.Float())
+    program_description = db.Column(db.String(255))
+
+    def __init__(self,program_name,lesson_id,program_cost,program_discount,program_description):
+        self.program_name = program_name
+        self.lesson_id = lesson_id
+        self.program_cost = program_cost
+        self.program_discount = program_discount
+        self.program_description = program_description
+
+    def __repr__(self):
+         return f"Program Name {self.program_name}"         
+######################################
+
+
+######################################
+######### BUSINESS COST MODELS #######
+######################################
 class Business_Costs(db.Model):
     __tablename__ = "business_costs"
 
@@ -137,8 +192,12 @@ class Business_Costs(db.Model):
 
     def __repr__(self):
          return f"Type of cost: {self.cost_name} -- Cost Value: {self.cost_value}"
+######################################
 
 
+######################################
+######### PAYMENTS MODELS ############
+######################################
 class Payments(db.Model):
     __tablename__ = "payments"
 
@@ -166,58 +225,24 @@ class Payments(db.Model):
         self.payment_description = payment_description
 
     def __repr__(self):
-         return f"Payment Name: {self.payment_name} -- Payment Value: {self.payment_value} -- Payment Date: {self.payment_date}" 
+        return f"Payment Name: {self.payment_name} -- Payment Value: {self.payment_value} -- Payment Date: {self.payment_date}" 
+######################################
 
 
-class Class_List(db.Model):
-    __tablename__ = "class_list"
-
-    person = db.relationship(Person)
-  
-    id = db.Column(db.Integer(), primary_key=True)
-    participant_id = db.Column(db.Integer(), db.ForeignKey('person.id'),nullable=False)
-    lesson_id = db.Column(db.Integer(), db.ForeignKey('lesson.id'),nullable=False)
-
-    def __init__(self,participant_id,lesson_id):
-        self.participant_id= participant_id 
-        self.lesson_id = lesson_id
-       
-    def __repr__(self):
-         return f"Lesson Id: {self.lesson_id} -- Participant Id: {self.participant_id}"
-
- 
-class Class_Program(db.Model):
-    __tablename__ = "class_program"
-
-    lesson = db.relationship(Lesson)
-  
-    id = db.Column(db.Integer(), primary_key=True)
-    lesson_id = db.Column(db.Integer(), db.ForeignKey('lesson.id'),nullable=False)
-    program_name = db.Column(db.String(80))
-    program_cost = db.Column(db.Float())
-    program_discount = db.Column(db.Float())
-    program_description = db.Column(db.String(255))
-
-    def __init__(self,program_name,lesson_id,program_cost,program_discount,program_description):
-        self.program_name = program_name
-        self.lesson_id = lesson_id
-        self.program_cost = program_cost
-        self.program_discount = program_discount
-        self.program_description = program_description
-
-    def __repr__(self):
-         return f"Program Name {self.program_name}"
-
-
+######################################
+######### QUESTIONAIRE MODELS ########
+######################################
 class Questionaire(db.Model):
     __tablename__ = "questionaire"
 
     id = db.Column(db.Integer(), primary_key=True)
     questionaire_name = db.Column(db.String(80))
+    questionaire_type = db.Column(db.String(50))
     description = db.Column(db.String(255))
 
-    def __init__(self,questionaire_name,description):
+    def __init__(self,questionaire_name,questionaire_type,description):
         self.questionaire_name = questionaire_name
+        self.questionaire_type = questionaire_type
         self.description = description
 
     def __repr__(self):
@@ -234,7 +259,7 @@ class Questionaire_Questions(db.Model):
     question = db.Column(db.String(120))
     response = db.Column(db.Boolean())
 
-    def __init__(self,questionaire_id,question,response):
+    def __init__(self,questionaire_id,response):
         self.questionaire_id = questionaire_id
         self.question = question
         self.response = response
@@ -277,3 +302,4 @@ class Customer_Questionaire_Questions(db.Model):
 
     def __repr__(self):
          return f"Customer Questions {self.id}"
+######################################

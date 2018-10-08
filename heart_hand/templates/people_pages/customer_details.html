@@ -15,9 +15,12 @@
 
             {% if children.count() > 0 %}
               <h3>Children Details</h3>
-              {% for child in children %}
-                <a href="{{url_for('people.child_details',child_id=child.id)}}">{{ child.first_name }} {{child.last_name}}</a>
-              {% endfor %}
+              <ul>
+                {% for child in children %}
+                <li><a href="{{url_for('people.child_details',child_id=child.id)}}">{{ child.first_name }} {{child.last_name}}</a></li>
+                {% endfor %}
+              </ul>
+              
             {% endif %}
             
             <br>

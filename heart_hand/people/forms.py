@@ -23,9 +23,12 @@ class CustomerEntryForm(FlaskForm):
     notes = TextAreaField('Notes')
     submit = SubmitField('Add Customer')
 
+
 class ChildEntryForm(FlaskForm):
     first_name = StringField('First Name', validators=[InputRequired(message='First name is required')])
     last_name = StringField('Last Name', validators=[InputRequired(message='Last name is required')])
     date_of_birth = DateField('Date of Birth', format='%Y-%m-%d', validators=[InputRequired(message='Date of birth is required')])
     notes = TextAreaField('Notes')  
     submit = SubmitField('Add Child')      
+
+

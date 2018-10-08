@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+        <h1>Questionaire Type Details for {{questionaire.questionaire_name}} </h1>
+            
+            <ul>
+              <li><strong>Type: </strong> {{questionaire.questionaire_type}}</li>
+              <li><strong>Description: </strong> {{questionaire.description}}</li>
+            </ul>
+            
+            <a class="btn btn-primary btn-block" href="{{ url_for('questionaire.show_all_questionaire_types') }}" role="button">Show All Questionaire Type</a>
+    </div>
+  </div>
+  
+{% endblock %}  
