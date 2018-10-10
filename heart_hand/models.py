@@ -257,9 +257,9 @@ class Questionaire_Questions(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     questionaire_id = db.Column(db.Integer(), db.ForeignKey('questionaire.id'),nullable=False)
     question = db.Column(db.String(120))
-    response = db.Column(db.Boolean())
+    response = db.Column(db.String(50))
 
-    def __init__(self,questionaire_id,response):
+    def __init__(self,questionaire_id,question,response):
         self.questionaire_id = questionaire_id
         self.question = question
         self.response = response

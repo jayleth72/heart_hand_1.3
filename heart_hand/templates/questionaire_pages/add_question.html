@@ -1,0 +1,20 @@
+{% from "/macros/_macros.html" import render_field_with_errors, render_field %}
+{% extends "base.html" %}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+        <h1>Add Question</h1>
+         
+        <form method="POST">
+              {{form.hidden_tag()}}
+              
+              {{ render_field_with_errors(form.question, class="form-control") }}
+              {{ render_field_with_errors(form.response, class="form-control") }}
+                  
+              <input type="submit" value="submit">
+        </form> 
+        
+    </div>
+  </div>
+  
+{% endblock %}  

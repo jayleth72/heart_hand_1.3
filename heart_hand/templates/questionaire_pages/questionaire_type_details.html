@@ -8,7 +8,11 @@
               <li><strong>Type: </strong> {{questionaire.questionaire_type}}</li>
               <li><strong>Description: </strong> {{questionaire.description}}</li>
             </ul>
-            
+
+        <h2>Questions</h2>    
+            <br>
+            <br>
+            <a class="btn btn-primary btn-block" href="{{ url_for('questionaire.add_question',questionaire_id=questionaire.id) }}" role="button">Add Question</a>
             <a class="btn btn-primary btn-block" href="{{ url_for('questionaire.show_all_questionaire_types') }}" role="button">Show All Questionaire Type</a>
     </div>
   </div>

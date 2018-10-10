@@ -2,8 +2,8 @@
 from flask import render_template,url_for,flash,redirect,request,Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from heart_hand import db
-from heart_hand.models import Questionaire
-from heart_hand.questionaire.forms import QuestionaireForm
+from heart_hand.models import Questionaire, Questionaire_Questions
+from heart_hand.questionaire.forms import QuestionaireForm, QuestionaireQuestionForm
 from datetime import datetime
 
 questionaire = Blueprint('questionaire', __name__)
@@ -45,4 +45,31 @@ def questionaire_details(id):
 def show_all_questionaire_types():
     questionaires = Questionaire.query.all()
     return render_template('questionaire_pages/show_all_questionaire_types.html',questionaires=questionaires) 
+
+# add question
+@questionaire.route("/add_question/<int:questionaire_id>",methods=['GET','POST'])
+@login_required
+def add_question(questionaire_id):
     
+    form = QuestionaireQuestionForm()
+    
+    if request.method == 'POST':
+        if form.validate():
+            question = Questionaire_Questions(questionaire_id=questionaire_id,question=request.form['question'],response=request.form['response'])
+            form.populate_obj(question)
+            db.session.add(question)
+            db.session.commit()
+            flash('New Questiona was successfully added')
+            return questionaire_details(questionaire_id) 
+        else:
+            flash("Your form contained errors")
+            return redirect(url_for('questionaire.add_question'))
+    
+    return render_template('questionaire_pages/add_question.html', form=form) 
+
+# show all questions for a questionaire type
+@questionaire.route("/show_all_questions/<int:questionaire_id>")
+@login_required
+def show_all_questions(questionaire_id):
+    questions = Questionaire_Questions.query.filter_by(questionaire_id=questionaire_id)
+    return questions

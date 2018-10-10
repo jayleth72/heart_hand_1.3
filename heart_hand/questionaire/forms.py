@@ -14,3 +14,8 @@ class QuestionaireForm(FlaskForm):
     questionaire_type = SelectField(u'Questionaire Type', choices=[('Medical', 'Medical'), ('Feedback', 'Feedback')])
     description = TextAreaField('Notes')  
     submit = SubmitField('Add New Questionaire') 
+
+class QuestionaireQuestionForm(FlaskForm):
+    question = StringField('Question', validators=[InputRequired(message='Question is required')])
+    response = SelectField(u'Questionaire Type', choices=[('Yes', 'Yes'), ('No', 'No'), ('None', 'None')])
+    submit = SubmitField('Submit Question') 
