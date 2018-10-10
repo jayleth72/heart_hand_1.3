@@ -37,7 +37,10 @@ def add_questionaire_type():
 def questionaire_details(id):
     # return questionaire or 404 page (questioniare not found)
     questionaire = Questionaire.query.filter_by(id=id).first_or_404()
-    return render_template('questionaire_pages/questionaire_type_details.html',questionaire=questionaire)
+    # retrieve questions for this questionaire type
+    # questions = show_all_questions(id)
+    questions = show_all_questions(id)
+    return render_template('questionaire_pages/questionaire_type_details.html',questionaire=questionaire,questions=questions)
 
 # show all questionaire types with hyperlinks
 @questionaire.route("/show_all_questionaire_types")
@@ -66,6 +69,7 @@ def add_question(questionaire_id):
             return redirect(url_for('questionaire.add_question'))
     
     return render_template('questionaire_pages/add_question.html', form=form) 
+
 
 # show all questions for a questionaire type
 @questionaire.route("/show_all_questions/<int:questionaire_id>")

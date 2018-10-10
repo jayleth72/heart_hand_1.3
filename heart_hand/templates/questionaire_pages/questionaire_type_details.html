@@ -9,7 +9,13 @@
               <li><strong>Description: </strong> {{questionaire.description}}</li>
             </ul>
 
-        <h2>Questions</h2>    
+        <h2>Questions</h2>
+        <ul>
+          {% for question in questions %}
+            <li>{{question.question}}  {{question.response}}</li>
+            
+          {% endfor %}
+        </ul>    
             <br>
             <br>
             <a class="btn btn-primary btn-block" href="{{ url_for('questionaire.add_question',questionaire_id=questionaire.id) }}" role="button">Add Question</a>
