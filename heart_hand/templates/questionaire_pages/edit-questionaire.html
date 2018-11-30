@@ -1,0 +1,35 @@
+{% from "/macros/_macros.html" import render_field_with_errors, render_field %}
+{% extends "base.html" %}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+        <h1>Edit Questions</h1>
+         
+        <form action="" method="POST">
+              {{form.hidden_tag()}}
+              
+              Questionaire Title: {{ form.title }}<br>
+              <div>
+                  <table>
+                      <tr>
+                          <th> Question</th>
+                          <th> Response</th>
+                          
+                      </tr>
+                      {% for question in form.grouped_questions %}
+                      <tr>
+                          <td>{{ question.question }}</td>
+                          <td>{{ question.response }}</td>
+                          
+                      </tr>
+                      {% endfor %}
+                  </table>
+              </div>
+                  
+              <input type="submit" value="submit">
+        </form> 
+        
+    </div>
+  </div>
+  
+{% endblock %}  

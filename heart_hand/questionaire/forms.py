@@ -1,7 +1,7 @@
 # questionaire/forms.py
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField, TextAreaField, FieldList, FormField
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms import ValidationError
 from flask_wtf.file import FileField, FileAllowed
@@ -19,3 +19,13 @@ class QuestionaireQuestionForm(FlaskForm):
     question = StringField('Question', validators=[InputRequired(message='Question is required')])
     response = SelectField(u'Questionaire Type', choices=[('Yes', 'Yes'), ('No', 'No'), ('None', 'None')])
     submit = SubmitField('Submit Question') 
+
+class QuestionaireYesNoQuestionForm(FlaskForm):
+    question = StringField('Question', validators=[InputRequired(message='Question is required')])
+    response = SelectField(u'Questionaire Type', choices=[('Yes', 'Yes'), ('No', 'No'), ('None', 'None')])
+
+class QuestionaireGroupForm(FlaskForm):
+    title = StringField('Title')
+    grouped_questions = FieldList(FormField(QuestionaireYesNoQuestionForm)) 
+       
+        
