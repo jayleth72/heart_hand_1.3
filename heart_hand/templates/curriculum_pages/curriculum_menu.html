@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+        <h1>Curriculum Menu</h1>
+        <a class="btn btn-primary btn-block" href="{{ url_for('curriculum.show_all_subjects') }}" role="button">Show All Subjects</a>
+        <a class="btn btn-primary btn-block" href="{{ url_for('curriculum.add_subject') }}" role="button">Add Subjects</a>
+    </div>
+  </div>
+  
+{% endblock %}    

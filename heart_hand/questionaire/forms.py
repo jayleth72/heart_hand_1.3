@@ -27,5 +27,13 @@ class QuestionaireYesNoQuestionForm(FlaskForm):
 class QuestionaireGroupForm(FlaskForm):
     title = StringField('Title')
     grouped_questions = FieldList(FormField(QuestionaireYesNoQuestionForm)) 
+
+class QuestionaireFormBase(FlaskForm):
+    submit = SubmitField('Submit')
+
+def questionaire_questions_list_form_builder(QuestionaireYesNoQuestionForm):
+    class QuestionListForm(QuestionaireFormBase):
+        pass
+           
        
         

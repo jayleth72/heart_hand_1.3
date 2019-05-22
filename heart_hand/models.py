@@ -108,21 +108,19 @@ class Lesson(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     lesson_name = db.Column(db.String(80))
     day_of_class = db.Column(db.String(80))
-    lesson_time = db.Column(db.DateTime())
+    lesson_time = db.Column(db.Integer())
     lesson_duration = db.Column(db.Integer())
-    lesson_recurring = db.Column(db.Boolean())
-    lesson_recurring_period = db.Column(db.String(80))
+    lesson_start_date = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
     lesson_cost = db.Column(db.Float())
     lesson_description = db.Column(db.String(255)) 
 
     def __init__(self,lesson_name,day_of_class,lesson_time,lesson_duration,lesson_cost,lesson_recurring,lesson_recurring_period,lesson_description):
-        self.lesson_name= lesson_name
-        self.day_of_class= day_of_class 
-        self.lesson_time= lesson_time
+        self.lesson_name = lesson_name
+        self.day_of_class = day_of_class 
+        self.lesson_time = lesson_time
         self.lesson_duration = lesson_duration
         self.lesson_cost = lesson_cost
-        self.lesson_recurring = lesson_recurring
-        self.lesson_recurring_period = lesson_recurring_period
+        self.lesson_start_date = lesson_start_date
         self.lesson_description = lesson_description
 
     def __repr__(self):
@@ -152,13 +150,13 @@ class Class_Program(db.Model):
     lesson = db.relationship(Lesson)
   
     id = db.Column(db.Integer(), primary_key=True)
-    lesson_id = db.Column(db.Integer(), db.ForeignKey('lesson.id'),nullable=False)
+    lesson_id = db.Column(db.Integer(), db.ForeignKey('lesson.id'), nullable=False)
     program_name = db.Column(db.String(80))
     program_cost = db.Column(db.Float())
     program_discount = db.Column(db.Float())
     program_description = db.Column(db.String(255))
 
-    def __init__(self,program_name,lesson_id,program_cost,program_discount,program_description):
+    def __init__(self, program_name, lesson_id, program_cost, program_discount, program_description):
         self.program_name = program_name
         self.lesson_id = lesson_id
         self.program_cost = program_cost
@@ -205,17 +203,17 @@ class Payments(db.Model):
     lesson = db.relationship(Lesson)
 
     id = db.Column(db.Integer(), primary_key=True)
-    payee_id = db.Column(db.Integer(), db.ForeignKey('person.id'),nullable=False)
-    lesson_id = db.Column(db.Integer(), db.ForeignKey('lesson.id'),nullable=False)
+    payee_id = db.Column(db.Integer(), db.ForeignKey('person.id'), nullable=False)
+    lesson_id = db.Column(db.Integer(), db.ForeignKey('lesson.id'), nullable=False)
     payment_value = db.Column(db.Float())
     payment_name = db.Column(db.String(80))
     payment_type = db.Column(db.String(80))
-    payment_date = db.Column(db.DateTime(),nullable=False,default=datetime.utcnow)
+    payment_date = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
     includes_gst = db.Column(db.Boolean())
     payment_description = db.Column(db.String(255)) 
 
-    def __init__(self,payee_id,lesson_id,payment_value,payment_name,payment_type,payment_date,includes_gst,payment_description):
-        self.payee_id = payee_id 
+    def __init__(self, payee_id, lesson_id, payment_value, payment_name, payment_type, payment_date, includes_gst, payment_description):
+        self.payee_id = payee_id
         self.lesson_id = lesson_id
         self.payment_value = payment_value
         self.payment_name = payment_name
@@ -259,7 +257,7 @@ class Questionaire_Questions(db.Model):
     question = db.Column(db.String(120))
     response = db.Column(db.String(50))
 
-    def __init__(self,questionaire_id,question,response):
+    def __init__(self, questionaire_id, question,response):
         self.questionaire_id = questionaire_id
         self.question = question
         self.response = response
@@ -302,4 +300,58 @@ class Customer_Questionaire_Questions(db.Model):
 
     def __repr__(self):
          return f"Customer Questions {self.id}"
+######################################
+
+
+######################################
+######### CURRICULUM MODELS ############
+######################################
+class Subjects(db.Model):
+    __tablename__ = "subjects"
+
+    id = db.Column(db.Integer(), primary_key=True)
+    subject_name = db.Column(db.String(80))
+    subject_description = db.Column(db.String(255)) 
+
+    def __init__(self,subject_name,subject_description):
+        self.subject_name = subject_name
+        self.subject_description = subject_description
+
+    def __repr__(self):
+         return f"Subject: {self.subject_name} -- Subject Description: {self.subject_description}"
+
+
+class Curriculum_Item(db.Model):
+    __tablename__ = "curriculum_item"
+
+    subjects = db.relationship(Subjects)
+
+    id = db.Column(db.Integer(), primary_key=True)
+    subject_id = db.Column(db.Integer(), db.ForeignKey('subjects.id'),nullable=False)
+    year_level = db.Column(db.Integer())
+    term = db.Column(db.Integer())
+    topic = db.Column(db.String(80))
+    learnt_skill = db.Column(db.String(80))
+    concepts = db.Column(db.String(80))
+    activity = db.Column(db.String(80))
+    resources = db.Column(db.String(80))
+    sample_to_collect = db.Column(db.String(80))
+    information_recorded = db.Column(db.String(80))
+    notes = db.Column(db.String(255)) 
+   
+    def __init__(self,subject_id,year_level,term,topic,learnt_skill,concepts,activity,resources,sample_to_colect,information_recorded,notes):
+        self.subject_id= subject_id
+        self.year_level = year_level
+        self.term = term
+        self.topic = topic
+        self.learnt_skill = learnt_skill
+        self.concepts = concepts
+        self.activity = activity
+        self.resources = resources
+        self.sample_to_collect = sample_to_colect
+        self.information_recorded = information_recorded
+        self.notes = notes
+
+    def __repr__(self):
+         return f"Subject: {self.id}"         
 ######################################

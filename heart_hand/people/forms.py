@@ -30,5 +30,3 @@ class ChildEntryForm(FlaskForm):
     date_of_birth = DateField('Date of Birth', format='%Y-%m-%d', validators=[InputRequired(message='Date of birth is required')])
     notes = TextAreaField('Notes')  
     submit = SubmitField('Add Child')      
-
-
