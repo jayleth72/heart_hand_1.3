@@ -321,14 +321,32 @@ class Subjects(db.Model):
          return f"Subject: {self.subject_name} -- Subject Description: {self.subject_description}"
 
 
+class Curriculum(db.Model):
+    __tablename__ = "curriculum"
+
+    id = db.Column(db.Integer(), primary_key=True)
+    curriculum_name = db.Column(db.String(80))
+    curriculum_year_level = db.Column(db.Integer())
+    curriculum_description = db.Column(db.String(255)) 
+
+    def __init__(self,curriculum_name,curriculum_year_level,curriculum_description):
+        self.curriculum_name = curriculum_name
+        self.curriculum_year_level = curriculum_year_level
+        self.curriculum_description = curriculum_description
+
+    def __repr__(self):
+         return f"Curriculum: {self.curriculum_name} -- Curriculum Description: {self.curriculum_description}"
+
+
 class Curriculum_Item(db.Model):
     __tablename__ = "curriculum_item"
 
     subjects = db.relationship(Subjects)
+    Curriculum = db.relationship(Curriculum)
 
     id = db.Column(db.Integer(), primary_key=True)
     subject_id = db.Column(db.Integer(), db.ForeignKey('subjects.id'),nullable=False)
-    year_level = db.Column(db.Integer())
+    curriculum_id = db.Column(db.Integer(), db.ForeignKey('curriculum.id'),nullable=False)
     term = db.Column(db.Integer())
     topic = db.Column(db.String(80))
     learnt_skill = db.Column(db.String(80))
@@ -339,8 +357,9 @@ class Curriculum_Item(db.Model):
     information_recorded = db.Column(db.String(80))
     notes = db.Column(db.String(255)) 
    
-    def __init__(self,subject_id,year_level,term,topic,learnt_skill,concepts,activity,resources,sample_to_colect,information_recorded,notes):
-        self.subject_id= subject_id
+    def __init__(self,subject_id,curriculum_id,year_level,term,topic,learnt_skill,concepts,activity,resources,sample_to_colect,information_recorded,notes):
+        self.subject_id = subject_id
+        self.curriculum_id = curriculum_id
         self.year_level = year_level
         self.term = term
         self.topic = topic
