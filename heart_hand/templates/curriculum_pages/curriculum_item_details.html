@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+        <h1>Curriculum Item details for {{the_curriculum_item.topic}}</h1>
+            <ul>
+              <li><strong>Subject: </strong> {{the_curriculum_item.subject_id}}</li>  
+              <li><strong>Term: </strong> {{the_curriculum_item.term}}</li>
+              <li><strong>Learnt skill: </strong> {{the_curriculum_item.learnt_skill}}</li>
+              <li><strong>Concepts: </strong> {{the_curriculum_item.concepts}}</li>
+              <li><strong>Activity: </strong> {{the_curriculum_item.activity}}</li>
+              <li><strong>Resources: </strong> {{the_curriculum_item.resources}}</li> 
+              <li><strong>Sample to collect: </strong> {{the_curriculum_item.sample_to_collect}}</li>
+              <li><strong>Information recorded: </strong> {{the_curriculum_item.information_recorded}}</li> 
+              <li><strong>Notes: </strong> {{the_curriculum_item.notes}}</li>    
+            </ul>
+                       
+            <br>
+            <br>
+            <a class="btn btn-primary btn-block" href="{{url_for('curriculum.update_curriculum_item',id=the_curriculum_item.id)}}" role="button">Update Curriculum Item Details</a>
+            
+    </div>
+  </div>
+  
+{% endblock %}  

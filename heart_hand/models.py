@@ -318,7 +318,10 @@ class Subjects(db.Model):
         self.subject_description = subject_description
 
     def __repr__(self):
-         return f"Subject: {self.subject_name} -- Subject Description: {self.subject_description}"
+         return f"Subject: {self.subject_name}"
+
+    def subject_choice_query():
+        return Subjects.query
 
 
 class Curriculum(db.Model):
@@ -357,10 +360,9 @@ class Curriculum_Item(db.Model):
     information_recorded = db.Column(db.String(80))
     notes = db.Column(db.String(255)) 
    
-    def __init__(self,subject_id,curriculum_id,year_level,term,topic,learnt_skill,concepts,activity,resources,sample_to_colect,information_recorded,notes):
+    def __init__(self,subject_id,curriculum_id,term,topic,learnt_skill,concepts,activity,resources,sample_to_colect,information_recorded,notes):
         self.subject_id = subject_id
         self.curriculum_id = curriculum_id
-        self.year_level = year_level
         self.term = term
         self.topic = topic
         self.learnt_skill = learnt_skill
@@ -372,5 +374,5 @@ class Curriculum_Item(db.Model):
         self.notes = notes
 
     def __repr__(self):
-         return f"Subject: {self.id}"         
+         return f"Curriculum Item: {self.id}"         
 ######################################

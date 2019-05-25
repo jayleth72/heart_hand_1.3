@@ -132,7 +132,7 @@ def child_details(child_id):
 
 
 # Update Child Details
-@people.route('/update_child<int:id>', methods=['GET','POST'])
+@people.route('/update_child/<int:id>', methods=['GET','POST'])
 @login_required
 def update_child(id):
 

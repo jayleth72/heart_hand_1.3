@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+        <h1>Curriculum Details for {{the_curriculum.curriculum_name}}</h1>
+            <ul>
+              <li><strong>Curriculum Name: </strong> {{the_curriculum.curriculum_name}}</li>
+              <li><strong>Curriculum Year Level: </strong> {{the_curriculum.curriculum_year_level}}</li>
+              <li><strong>Curriculum Description: </strong> {{the_curriculum.curriculum_description}}</li>
+            </ul>
+                       
+            <br>
+            <br>
+            
+            <a class="btn btn-primary btn-block" href="{{url_for('curriculum.add_curriculum_item',curriculum_id=the_curriculum.id)}}" role="button">Add Curriculum Item</a>
+            <a class="btn btn-primary btn-block" href="{{url_for('curriculum.update_curriculum',id=the_curriculum.id)}}" role="button">Update Curriculum Details</a>
+            
+    </div>
+  </div>
+  
+{% endblock %}  
+
