@@ -1,0 +1,12 @@
+{% from "/macros/_macros.html" import render_field_with_errors, render_field %}
+{% extends "base.html" %}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+        <h1>Curriculum for Term {{ term }}</h1>
+        <h2>Subject: {{ subject }}</h2>
+        {{ table }}
+
+    </div>
+
+{% endblock %}      

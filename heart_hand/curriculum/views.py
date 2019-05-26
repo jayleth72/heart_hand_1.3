@@ -1,11 +1,12 @@
 # curriculum/views.py
-from flask import render_template,url_for,flash,redirect,request,Blueprint
+from flask import render_template, url_for,flash, redirect,request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from heart_hand import db
 from heart_hand.models import Curriculum_Item, Subjects, Curriculum
-from heart_hand.curriculum.forms import CurriculumEntryForm, CurriculumItemEntryForm,SubjectEntryForm
+from heart_hand.curriculum.forms import CurriculumEntryForm, CurriculumItemEntryForm, SubjectEntryForm, CurriculumItemsTable, SubjectTermSelectorForm
 from datetime import datetime
 import sys
+from flask_table import Table, Col
 
 curriculum = Blueprint('curriculum', __name__)
 
@@ -158,7 +159,7 @@ def add_curriculum_item(curriculum_id):
     if request.method == 'POST':
 
         if form.validate():
-            the_curriculum_item = Curriculum_Item(subject_id=request.form['subject_id'],curriculum_id=curriculum_id,term=request.form['term'],topic=request.form['topic']
+            the_curriculum_item = Curriculum_Item(curriculum_id=curriculum_id,subject=request.form['subject'],term=request.form['term'],topic=request.form['topic']
                                     ,learnt_skill=request.form['learnt_skill'],concepts=request.form['concepts'],activity=request.form['activity']
                                     ,resources=request.form['resources'],sample_to_colect=request.form['sample_to_collect'],information_recorded=request.form['information_recorded']
                                     ,notes=request.form['notes'])
@@ -183,7 +184,7 @@ def curriculum_item_details(id):
     # return subect or 404 page (subject not found)
     print('currciulim item details', file=sys.stderr)
     the_curriculum_item = Curriculum_Item.query.filter_by(id=id).first_or_404()
-    return render_template('curriculum_pages/curriculum_item_details.html',the_curriculum_item=the_curriculum_item)
+    return render_template('curriculum_pages/curriculum_items_details.html',the_curriculum_item=the_curriculum_item)
 
 
 # Update Curriculum Item Details
@@ -194,9 +195,10 @@ def update_curriculum_item(id):
     form = CurriculumItemEntryForm()
     the_curriculum_item = Curriculum_Item.query.filter_by(id=id).first_or_404()
 
+    
     if form.validate_on_submit():
 
-        the_curriculum_item.subject_id = form.subject_id.data
+        the_curriculum_item.subject = form.subject.data
         the_curriculum_item.topic =  form.topic.data
         the_curriculum_item.term =  form.term.data
         the_curriculum_item.learnt_skill = form.learnt_skill.data
@@ -211,7 +213,7 @@ def update_curriculum_item(id):
         return curriculum_item_details(id)
 
     elif request.method == "GET":
-        form.subject_id.data = the_curriculum_item.subject_id
+        form.subject.data = the_curriculum_item.subject
         form.topic.data = the_curriculum_item.topic
         form.term.data = the_curriculum_item.term
         form.learnt_skill.data = the_curriculum_item.learnt_skill
@@ -230,3 +232,55 @@ def update_curriculum_item(id):
 def show_all_curriculum_items():
     the_curriculum_items = Curriculum_Item.query.all()
     return render_template('curriculum_pages/show_all_curriculum_items.html',the_curriculum_items=the_curriculum_items) 
+
+
+# show table for curriculum items
+@curriculum.route("/show_table")
+@login_required
+def show_table():
+    qry = db.session.query(Curriculum_Item)
+    results = qry.all()
+    table = CurriculumItemsTable(results)
+    table.border = True
+    return render_template('curriculum_pages/curriculum_items_table.html', table=table)
+
+# show table for selected term
+@curriculum.route("/show_table_for_term/<int:term>")
+@login_required
+def show_table_for_term(term):
+    qry = db.session.query(Curriculum_Item).filter_by(term=term)
+    results = qry.all()
+    table = CurriculumItemsTable(results)
+    table.border = True
+    return render_template('curriculum_pages/curriculum_items_table_for_term.html', term=term, table=table) 
+
+# show table for selected term and subject
+@curriculum.route("/show_table_for_term/<int:term>/<string:subject>")
+@login_required
+def show_table_for_term_subject(term, subject):
+    qry = db.session.query(Curriculum_Item).filter_by(term=term, subject=subject)
+    results = qry.all()
+    table = CurriculumItemsTable(results)
+    table.border = True
+    new_subject = str(subject)
+    page_subject = new_subject.strip('\'()\',')
+    print(page_subject, file=sys.stderr)
+    return render_template('curriculum_pages/curriculum_table_term_subject.html', subject=page_subject, term=term, table=table) 
+
+
+# Show Curriculum Items Table for selected Term and Subject
+@curriculum.route('/table_selector', methods=['GET','POST'])
+@login_required
+def table_selector():
+
+    form = SubjectTermSelectorForm()
+        
+    if form.validate_on_submit():
+
+        the_subject = form.subject.data
+        the_term =  form.term.data
+             
+        return show_table_for_term_subject(the_term, the_subject)
+
+   
+    return render_template('curriculum_pages/subject_term_selector.html',form=form)

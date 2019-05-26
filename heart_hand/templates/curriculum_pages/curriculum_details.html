@@ -14,7 +14,11 @@
             
             <a class="btn btn-primary btn-block" href="{{url_for('curriculum.add_curriculum_item',curriculum_id=the_curriculum.id)}}" role="button">Add Curriculum Item</a>
             <a class="btn btn-primary btn-block" href="{{url_for('curriculum.update_curriculum',id=the_curriculum.id)}}" role="button">Update Curriculum Details</a>
-            
+            <a class="btn btn-primary btn-block" href="{{url_for('curriculum.show_table_for_term',term=1)}}" role="button">Curriculum Term 1</a>
+            <a class="btn btn-primary btn-block" href="{{url_for('curriculum.show_table_for_term',term=2)}}" role="button">Curriculum Term 2</a>
+            <a class="btn btn-primary btn-block" href="{{url_for('curriculum.show_table_for_term',term=3)}}" role="button">Curriculum Term 3</a>
+            <a class="btn btn-primary btn-block" href="{{url_for('curriculum.show_table_for_term',term=4)}}" role="button">Curriculum Term 4</a>
+            <a class="btn btn-primary btn-block" href="{{url_for('curriculum.table_selector')}}" role="button">Term and Subject Selector</a>
     </div>
   </div>
   

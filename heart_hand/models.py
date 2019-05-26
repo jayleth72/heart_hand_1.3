@@ -318,11 +318,13 @@ class Subjects(db.Model):
         self.subject_description = subject_description
 
     def __repr__(self):
-         return f"Subject: {self.subject_name}"
+         return  {self.id}
 
     def subject_choice_query():
         return Subjects.query
 
+    def __str__(self):
+        return str(self.subject_name)
 
 class Curriculum(db.Model):
     __tablename__ = "curriculum"
@@ -343,13 +345,12 @@ class Curriculum(db.Model):
 
 class Curriculum_Item(db.Model):
     __tablename__ = "curriculum_item"
-
-    subjects = db.relationship(Subjects)
+    
     Curriculum = db.relationship(Curriculum)
-
+    
     id = db.Column(db.Integer(), primary_key=True)
-    subject_id = db.Column(db.Integer(), db.ForeignKey('subjects.id'),nullable=False)
     curriculum_id = db.Column(db.Integer(), db.ForeignKey('curriculum.id'),nullable=False)
+    subject = db.Column(db.String(80))
     term = db.Column(db.Integer())
     topic = db.Column(db.String(80))
     learnt_skill = db.Column(db.String(80))
@@ -360,9 +361,9 @@ class Curriculum_Item(db.Model):
     information_recorded = db.Column(db.String(80))
     notes = db.Column(db.String(255)) 
    
-    def __init__(self,subject_id,curriculum_id,term,topic,learnt_skill,concepts,activity,resources,sample_to_colect,information_recorded,notes):
-        self.subject_id = subject_id
+    def __init__(self,curriculum_id,subject,term,topic,learnt_skill,concepts,activity,resources,sample_to_colect,information_recorded,notes):
         self.curriculum_id = curriculum_id
+        self.subject= subject
         self.term = term
         self.topic = topic
         self.learnt_skill = learnt_skill

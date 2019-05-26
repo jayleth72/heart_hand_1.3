@@ -8,11 +8,19 @@ from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import InputRequired
 from wtforms.fields.html5 import EmailField, DateField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from flask_table import Table, Col
 
 class SubjectEntryForm(FlaskForm):
     subject_name = StringField('Subject Name', validators=[InputRequired(message='Subject Name is required')])
     subject_description = TextAreaField('Subject Description')
     submit = SubmitField('Add Subject')
+
+def get_subjects():
+    from heart_hand.models import Subjects
+    return Subjects.query.with_entities(Subjects.subject_name)
+
+def get_pk(obj):
+    return str(obj)
 
 
 class CurriculumEntryForm(FlaskForm):
@@ -20,16 +28,10 @@ class CurriculumEntryForm(FlaskForm):
     curriculum_year_level =  IntegerField('Curriculum Year Level', validators=[InputRequired(message='Year Level is required')])
     curriculum_description = TextAreaField('Curriclum Description')
     submit = SubmitField('Add Curriculum')
-
-def get_subjects():
-    from heart_hand.models import Subjects
-    return Subjects.query.with_entities(Subjects.id)
-
-def get_pk(obj):
-    return str(obj)    
+  
 
 class CurriculumItemEntryForm(FlaskForm):
-    subject_id = QuerySelectField(u'Subjects',query_factory=get_subjects, get_pk=get_pk)
+    subject = QuerySelectField(u'Subjects',query_factory=get_subjects, get_pk=get_pk, get_label='subject_name', allow_blank=True)
     term =  SelectField(u'Term', choices=[(1, 1), (2, 2), (3, 3), (4, 4)], validators=[InputRequired(message='Term is required')], coerce=int)
     topic = StringField('Topic', validators=[InputRequired(message='Topic is required')])
     learnt_skill = StringField('Learnt skill', validators=[InputRequired(message='Learnt Skill is required')])
@@ -40,3 +42,24 @@ class CurriculumItemEntryForm(FlaskForm):
     information_recorded = StringField('Information recorded', validators=[InputRequired(message='Information recorded is required')])
     notes = TextAreaField('Notes')
     submit = SubmitField('Add Curriculum Item')
+
+
+class SubjectTermSelectorForm(FlaskForm):
+    subject = QuerySelectField(u'Subjects',query_factory=get_subjects, get_pk=get_pk, get_label='subject_name', allow_blank=True)
+    term =  SelectField(u'Term', choices=[(1, 1), (2, 2), (3, 3), (4, 4)], validators=[InputRequired(message='Term is required')], coerce=int)
+    submit = SubmitField('Select Term & Subject')
+
+
+class CurriculumItemsTable(Table):
+    id = Col('Id', show=False)
+    curriculum_id = Col('Curriculum Id', show=False)
+    subject = Col('Subject', show=False)
+    term = Col('Term', show=False)
+    topic = Col('Topic')
+    learnt_skill = Col('Learnt Skills')
+    concepts = Col('Concepts')
+    activity = Col('Activity')
+    resources = Col('Resources')
+    sample_to_collect = Col('Sample to Collect')
+    information_recorded = Col('Information recorded')
+    notes = Col('Notes', show=False)  
