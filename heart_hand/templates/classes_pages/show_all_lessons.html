@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+        <h1>All Lessons</h1>
+            
+            {% for lesson in lessons %}
+                <a class="btn btn-primary btn-block" href="{{url_for('classes.lesson_details',id=lesson.id)}}" role="button">{{lesson.lesson_name}}</a>
+            {% endfor %}
+            
+            
+    </div>
+  </div>
+  
+{% endblock %}  

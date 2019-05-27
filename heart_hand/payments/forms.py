@@ -17,3 +17,5 @@ class PaymentsEntryForm(FlaskForm):
     includes_gst = SelectField(u'Includes GST', choices=[('No', 'No'), ('Yes', 'Yes')])
     payment_description = TextAreaField('Payment Description')
     submit = SubmitField('Add Payment')
+
+    

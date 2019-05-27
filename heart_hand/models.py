@@ -108,19 +108,20 @@ class Lesson(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     lesson_name = db.Column(db.String(80))
     day_of_class = db.Column(db.String(80))
-    lesson_time = db.Column(db.Integer())
+    lesson_time = db.Column(db.String(80))
     lesson_duration = db.Column(db.Integer())
     lesson_start_date = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
     lesson_cost = db.Column(db.Float())
-    lesson_description = db.Column(db.String(255)) 
+    lesson_description = db.Column(db.String(255))
 
-    def __init__(self,lesson_name,day_of_class,lesson_time,lesson_duration,lesson_cost,lesson_recurring,lesson_recurring_period,lesson_description):
+    def __init__(self, lesson_name, day_of_class, lesson_time, lesson_duration, lesson_start_date, lesson_cost, lesson_description):
         self.lesson_name = lesson_name
-        self.day_of_class = day_of_class 
+        self.day_of_class = day_of_class
         self.lesson_time = lesson_time
         self.lesson_duration = lesson_duration
         self.lesson_cost = lesson_cost
         self.lesson_start_date = lesson_start_date
+        lesson_cost = db.Column(db.Float())
         self.lesson_description = lesson_description
 
     def __repr__(self):
@@ -201,20 +202,23 @@ class Payments(db.Model):
 
     person = db.relationship(Person)
     lesson = db.relationship(Lesson)
+    class_program = db.relationship(Class_Program)
 
     id = db.Column(db.Integer(), primary_key=True)
     payee_id = db.Column(db.Integer(), db.ForeignKey('person.id'), nullable=False)
-    lesson_id = db.Column(db.Integer(), db.ForeignKey('lesson.id'), nullable=False)
+    lesson_id = db.Column(db.Integer(), db.ForeignKey('lesson.id'), nullable=True)
+    class_program_id = db.Column(db.Integer(), db.ForeignKey('class_program.id'), nullable=True)
     payment_value = db.Column(db.Float())
     payment_name = db.Column(db.String(80))
     payment_type = db.Column(db.String(80))
     payment_date = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
     includes_gst = db.Column(db.Boolean())
-    payment_description = db.Column(db.String(255)) 
+    payment_description = db.Column(db.String(255))
 
-    def __init__(self, payee_id, lesson_id, payment_value, payment_name, payment_type, payment_date, includes_gst, payment_description):
+    def __init__(self, payee_id, lesson_id, class_program_id, payment_value, payment_name, payment_type, payment_date, includes_gst, payment_description):
         self.payee_id = payee_id
         self.lesson_id = lesson_id
+        self.class_program_id = class_program_id
         self.payment_value = payment_value
         self.payment_name = payment_name
         self.payment_type = payment_type
@@ -238,7 +242,7 @@ class Questionaire(db.Model):
     questionaire_type = db.Column(db.String(50))
     description = db.Column(db.String(255))
 
-    def __init__(self,questionaire_name,questionaire_type,description):
+    def __init__(self, questionaire_name, questionaire_type, description):
         self.questionaire_name = questionaire_name
         self.questionaire_type = questionaire_type
         self.description = description

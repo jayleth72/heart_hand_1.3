@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+        <h1>Lesson Details for {{the_lesson.lesson_name}}</h1>
+            <ul>
+              <li><strong>Day of Class: </strong> {{the_lesson.day_of_class}}</li>
+              <li><strong>Lesson Start Time: </strong> {{the_lesson.lesson_time}}</li>
+              <li><strong>Lesson Duration: </strong> {{the_lesson.lesson_duration}}</li>
+              <li><strong>Lesson Start Date: </strong> {{the_lesson.lesson_start_date.strftime('%d-%b-%Y')}}</li>
+              <li><strong>Lesson Cost: </strong> {{the_lesson.lesson_cost}}</li>
+              <li><strong>Lesson Description: </strong> {{the_lesson.lesson_description}}</li>      
+            </ul>
+           
+            <br>
+            <br>
+            
+            <a class="btn btn-primary btn-block" href="{{url_for('classes.update_lesson',id=the_lesson.id)}}" role="button">Update Lesson Details</a>
+         
+    </div>
+  </div>
+  
+{% endblock %}  
+
+                                

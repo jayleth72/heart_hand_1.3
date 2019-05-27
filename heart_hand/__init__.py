@@ -42,6 +42,7 @@ from heart_hand.questionaire.views import questionaire
 from heart_hand.payments.views import payments
 from heart_hand.error_pages.handlers import error_pages
 from heart_hand.curriculum.views import curriculum
+from heart_hand.classes.views import classes
 
 app.register_blueprint(core)
 app.register_blueprint(users)
@@ -49,6 +50,9 @@ app.register_blueprint(people)
 app.register_blueprint(questionaire)
 app.register_blueprint(error_pages)
 app.register_blueprint(curriculum)
+app.register_blueprint(classes)
+app.register_blueprint(payments)
+
 
 ######################################
 ############# FLASK SECURITY ############
