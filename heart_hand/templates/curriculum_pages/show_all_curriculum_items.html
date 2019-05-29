@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+        <h1>All Curriculums Items</h1>
+            
+            {% for the_curriculum_item in the_curriculum_items %}
+                <a class="btn btn-primary btn-block" href="{{url_for('curriculum.curriculum_item_details',id=the_curriculum_item.id,curriculum_id=the_curriculum_item.curriculum_id)}}" role="button">{{the_curriculum_item.subject}} : Term-{{the_curriculum_item.term}}</a>
+            {% endfor %}
+            
+            
+    </div>
+  </div>
+  
+{% endblock %}  

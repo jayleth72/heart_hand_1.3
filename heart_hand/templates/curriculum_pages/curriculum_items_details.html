@@ -2,7 +2,7 @@
 {% block content %}
   <div class="jumbotron">
     <div class="container">
-        <h1>Curriculum Item details for {{the_curriculum_item.topic}}</h1>
+        <h1>Curriculum Item details for {{the_curriculum.curriculum_name}}</h1>
             <ul>
               <li><strong>Subject: </strong> {{the_curriculum_item.subject}}</li>  
               <li><strong>Term: </strong> {{the_curriculum_item.term}}</li>
@@ -17,8 +17,9 @@
                        
             <br>
             <br>
+            <a class="btn btn-primary btn-block" href="{{url_for('curriculum.curriculum_details',id=the_curriculum_item.curriculum_id)}}" role="button">Go Back to Curriculum Main Menu</a>
             <a class="btn btn-primary btn-block" href="{{url_for('curriculum.update_curriculum_item',id=the_curriculum_item.id)}}" role="button">Update Curriculum Item Details</a>
-            
+            <a class="btn btn-primary btn-block" href="{{url_for('curriculum.add_curriculum_item',curriculum_id=the_curriculum_item.curriculum_id)}}" role="button">Add Curriculum Item Details</a>
     </div>
   </div>
   

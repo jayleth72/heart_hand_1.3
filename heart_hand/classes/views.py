@@ -24,7 +24,7 @@ def add_lesson():
 
     if request.method == 'POST':
         if form.validate():
-            lesson = Lesson(lesson_name=request.form['lesson_name'],day_of_class=request.form['day_of_class'],lesson_time=request.form['lesson_time'],lesson_duration=request.form['lesson_duration']
+            lesson = Lesson(lesson_name=request.form['lesson_name'],term=request.form['term'],day_of_class=request.form['day_of_class'],lesson_time=request.form['lesson_time'],lesson_duration=request.form['lesson_duration']
                        ,lesson_start_date=request.form['lesson_start_date'],lesson_cost=request.form['lesson_cost'],lesson_description=request.form['lesson_description'])
             form.populate_obj(lesson)
             
@@ -61,6 +61,7 @@ def update_lesson(id):
     if form.validate_on_submit():
         
         lesson.lesson_name = form.lesson_name.data 
+        lesson.term = form.term.data 
         lesson.day_of_class= form.day_of_class.data 
         lesson.lesson_time = form.lesson_time.data
         lesson.lesson_duration = form.lesson_duration.data
@@ -73,6 +74,7 @@ def update_lesson(id):
 
     elif request.method == "GET":
         form.lesson_name.data = lesson.lesson_name
+        form.term.data = lesson.term
         form.day_of_class.data = lesson.day_of_class
         form.lesson_time.data = lesson.lesson_time
         form.lesson_duration.data = lesson.lesson_duration

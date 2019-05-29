@@ -11,6 +11,7 @@ from wtforms.fields.html5 import EmailField, DateField
 
 class LessonEntryForm(FlaskForm):
     lesson_name = StringField('Lesson Name', validators=[InputRequired(message='Lesson name is required')])
+    term =  SelectField(u'Term', choices=[(1, 1), (2, 2), (3, 3), (4, 4)], validators=[InputRequired(message='Term is required')], coerce=int)
     day_of_class = SelectField(u'Day of Class', choices=[('monday', 'monday'), ('tuesday', 'tuesday'), ('wednesday', 'wednesday'), ('thursday', 'thursday'), ('friday', 'friday'), ('saturday', 'saturday'), ('sunday', 'sunday')])
     lesson_time = StringField('Lesson Start Time',  validators=[InputRequired(message='Lesson time is required')])
     lesson_duration= IntegerField('Lesson Duration',  validators=[InputRequired(message='Lesson duration is required')])

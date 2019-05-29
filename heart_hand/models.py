@@ -107,6 +107,7 @@ class Lesson(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)
     lesson_name = db.Column(db.String(80))
+    term = db.Column(db.Integer())
     day_of_class = db.Column(db.String(80))
     lesson_time = db.Column(db.String(80))
     lesson_duration = db.Column(db.Integer())
@@ -114,14 +115,15 @@ class Lesson(db.Model):
     lesson_cost = db.Column(db.Float())
     lesson_description = db.Column(db.String(255))
 
-    def __init__(self, lesson_name, day_of_class, lesson_time, lesson_duration, lesson_start_date, lesson_cost, lesson_description):
+    def __init__(self, lesson_name, term, day_of_class, lesson_time, lesson_duration, lesson_start_date, lesson_cost, lesson_description):
         self.lesson_name = lesson_name
+        self.term = term
         self.day_of_class = day_of_class
         self.lesson_time = lesson_time
         self.lesson_duration = lesson_duration
         self.lesson_cost = lesson_cost
         self.lesson_start_date = lesson_start_date
-        lesson_cost = db.Column(db.Float())
+        self.lesson_cost = db.Column(db.Float())
         self.lesson_description = lesson_description
 
     def __repr__(self):
@@ -356,13 +358,13 @@ class Curriculum_Item(db.Model):
     curriculum_id = db.Column(db.Integer(), db.ForeignKey('curriculum.id'),nullable=False)
     subject = db.Column(db.String(80))
     term = db.Column(db.Integer())
-    topic = db.Column(db.String(80))
-    learnt_skill = db.Column(db.String(80))
-    concepts = db.Column(db.String(80))
-    activity = db.Column(db.String(80))
-    resources = db.Column(db.String(80))
-    sample_to_collect = db.Column(db.String(80))
-    information_recorded = db.Column(db.String(80))
+    topic = db.Column(db.String(150))
+    learnt_skill = db.Column(db.String(150))
+    concepts = db.Column(db.String(150))
+    activity = db.Column(db.String(150))
+    resources = db.Column(db.String(150))
+    sample_to_collect = db.Column(db.String(150))
+    information_recorded = db.Column(db.String(150))
     notes = db.Column(db.String(255)) 
    
     def __init__(self,curriculum_id,subject,term,topic,learnt_skill,concepts,activity,resources,sample_to_colect,information_recorded,notes):

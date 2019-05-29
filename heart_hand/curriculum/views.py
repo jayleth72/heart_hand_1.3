@@ -88,7 +88,7 @@ def update_subject(id):
 def add_curriculum():
 
     form = CurriculumEntryForm()
-
+    
     if request.method == 'POST':
         if form.validate():
             the_curriculum = Curriculum(curriculum_name=request.form['curriculum_name'],curriculum_year_level=request.form['curriculum_year_level'],curriculum_description=request.form['curriculum_description'])
@@ -154,7 +154,7 @@ def update_curriculum(id):
 def add_curriculum_item(curriculum_id):
 
     form = CurriculumItemEntryForm()
-    
+    the_curriculum= Curriculum.query.filter_by(id=curriculum_id).first_or_404()
 
     if request.method == 'POST':
 
@@ -168,23 +168,25 @@ def add_curriculum_item(curriculum_id):
             db.session.add(the_curriculum_item)
             db.session.commit()
             flash('New Curriculum Item was successfully added')
-            return curriculum_item_details(the_curriculum_item.id)
+            return curriculum_item_details(the_curriculum_item.id, curriculum_id)
         else:
             flash("Your form contained errors")
-            return redirect(url_for('curriculum.add_curriculum_item',curriculum_id_id=curriculum_id))
+            return redirect(url_for('curriculum.add_curriculum_item',curriculum_id=curriculum_id))
     print('get fucked', file=sys.stderr) 
-    return render_template('curriculum_pages/add_curriculum_item.html', curriculum_id=curriculum_id, form=form) 
+    return render_template('curriculum_pages/add_curriculum_item.html', curriculum_id=curriculum_id, form=form, the_curriculum_name=the_curriculum.curriculum_name) 
 
 
 # return curriculum item details using their id
-@curriculum.route("/curriculum_item_details/<int:id>")
+@curriculum.route("/curriculum_item_details/<int:id>/<int:curriculum_id>")
 @login_required
-def curriculum_item_details(id):
+def curriculum_item_details(id, curriculum_id):
     page = request.args.get('page',1,type=int)
     # return subect or 404 page (subject not found)
     print('currciulim item details', file=sys.stderr)
     the_curriculum_item = Curriculum_Item.query.filter_by(id=id).first_or_404()
-    return render_template('curriculum_pages/curriculum_items_details.html',the_curriculum_item=the_curriculum_item)
+    # pass the currciulum as well
+    the_curriculum= Curriculum.query.filter_by(id=curriculum_id).first_or_404()
+    return render_template('curriculum_pages/curriculum_items_details.html',the_curriculum_item=the_curriculum_item, the_curriculum=the_curriculum)
 
 
 # Update Curriculum Item Details
@@ -210,7 +212,7 @@ def update_curriculum_item(id):
         the_curriculum_item.notes = form.notes.data
         db.session.commit()
         flash('Curriculum Item Details Updated!')
-        return curriculum_item_details(id)
+        return curriculum_item_details(id, the_curriculum_item.curriculum_id)
 
     elif request.method == "GET":
         form.subject.data = the_curriculum_item.subject
