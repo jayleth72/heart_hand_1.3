@@ -12,7 +12,7 @@ app = Flask(__name__)
 ######### DATABASE SETUP #############
 ######################################
 # app.config['SQLALCHEMY_DATABASE_URI']= DATABASE_URI
-app.config['SQLALCHEMY_DATABASE_URI']= 'postgres://lqwpyunuzfwgnb:ca31ceaa3526ed553f769d522f7509ff2096d7751d2ca576e1c76bacdb17d429@ec2-50-19-127-115.compute-1.amazonaws.com:5432/dd1d2g9qoo07db?sslmode=require'
+app.config['SQLALCHEMY_DATABASE_URI']= 'postgres://egbivhrkbfcdcj:e7a8bf7abc7c9ced7d32055c7bb0b7fa1efd73f87044234bab0af99f022f5937@ec2-54-83-9-169.compute-1.amazonaws.com:5432/da0qepfn946543?sslmode=require'
 # app.config['SECRET_KEY']= SECRET_KEY 
 # app.config['SECURITY_REGISTERABLE']= SECURITY_REGISTERABLE
 # app.config['SECURITY_PASSWORD_HASH'] = SECURITY_PASSWORD_HASH 
