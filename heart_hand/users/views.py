@@ -26,7 +26,7 @@ def registerUser():
     else:
         flash_errors(form)    
 
-    return render_template('registerUser.html',form=form)
+    return render_template('users/registerUser.html',form=form)
      
 
 # login
