@@ -1,18 +1,19 @@
 # heart_heart/__init__.py
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from heart_hand.settings import *
+# from heart_hand.settings import *
+from flask.ext.security.utils import encrypt_password
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
 
 app = Flask(__name__)
-
+app.config.from_pyfile('config.py')
 ######################################
 ######### DATABASE SETUP #############
 ######################################
 # app.config['SQLALCHEMY_DATABASE_URI']= DATABASE_URI
-app.config['SQLALCHEMY_DATABASE_URI']= 'postgres://egbivhrkbfcdcj:e7a8bf7abc7c9ced7d32055c7bb0b7fa1efd73f87044234bab0af99f022f5937@ec2-54-83-9-169.compute-1.amazonaws.com:5432/da0qepfn946543?sslmode=require'
+# app.config['SQLALCHEMY_DATABASE_URI']= 'postgres://egbivhrkbfcdcj:e7a8bf7abc7c9ced7d32055c7bb0b7fa1efd73f87044234bab0af99f022f5937@ec2-54-83-9-169.compute-1.amazonaws.com:5432/da0qepfn946543?sslmode=require'
 # app.config['SECRET_KEY']= SECRET_KEY 
 # app.config['SECURITY_REGISTERABLE']= SECURITY_REGISTERABLE
 # app.config['SECURITY_PASSWORD_HASH'] = SECURITY_PASSWORD_HASH 
