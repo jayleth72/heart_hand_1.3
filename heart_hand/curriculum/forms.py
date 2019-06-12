@@ -35,7 +35,7 @@ class CurriculumItemEntryForm(FlaskForm):
     term =  SelectField(u'Term', choices=[(1, 1), (2, 2), (3, 3), (4, 4)], validators=[InputRequired(message='Term is required')], coerce=int)
     topic = StringField('Topic', validators=[InputRequired(message='Topic is required')])
     learnt_skill = TextAreaField('Learnt skill', validators=[InputRequired(message='Learnt Skill is required')])
-    concepts = TextAreaField('Concepts', validators=[InputRequired(message='Concepts is required')])
+    concepts = TextAreaField('Concepts')
     activity = TextAreaField('Activity', validators=[InputRequired(message='Activity is required')])
     resources = TextAreaField('Resources', validators=[InputRequired(message='Resources is required')])
     sample_to_collect = TextAreaField('Sample to Collect', validators=[InputRequired(message='Sample to Collect is required')])
