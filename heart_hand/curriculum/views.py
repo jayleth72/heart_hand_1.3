@@ -207,7 +207,7 @@ def update_curriculum_item(id):
         the_curriculum_item.concepts = form.concepts.data
         the_curriculum_item.activity = form.activity.data
         the_curriculum_item.resources = form.resources.data
-        the_curriculum_item.sample_to_colect = form.sample_to_collect.data
+        the_curriculum_item.sample_to_collect = form.sample_to_collect.data
         the_curriculum_item.information_recorded = form.information_recorded.data
         the_curriculum_item.notes = form.notes.data
         db.session.commit()

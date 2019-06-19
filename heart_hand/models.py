@@ -358,14 +358,14 @@ class Curriculum_Item(db.Model):
     curriculum_id = db.Column(db.Integer(), db.ForeignKey('curriculum.id'),nullable=False)
     subject = db.Column(db.String(80))
     term = db.Column(db.Integer())
-    topic = db.Column(db.String(255))
-    learnt_skill = db.Column(db.String(255))
-    concepts = db.Column(db.String(255))
-    activity = db.Column(db.String(255))
-    resources = db.Column(db.String(255))
-    sample_to_collect = db.Column(db.String(255))
-    information_recorded = db.Column(db.String(255))
-    notes = db.Column(db.String(255)) 
+    topic = db.Column(db.String(400))
+    learnt_skill = db.Column(db.String(400))
+    concepts = db.Column(db.String(400))
+    activity = db.Column(db.String(400))
+    resources = db.Column(db.String(400))
+    sample_to_collect = db.Column(db.String(400))
+    information_recorded = db.Column(db.String(400))
+    notes = db.Column(db.String(400)) 
    
     def __init__(self,curriculum_id,subject,term,topic,learnt_skill,concepts,activity,resources,sample_to_colect,information_recorded,notes):
         self.curriculum_id = curriculum_id
